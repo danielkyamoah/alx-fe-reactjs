@@ -20,9 +20,9 @@ function App() {
         return (
     <div>
       <UserProfile
-        name="Daniel Kofi Yamoah"
+        name="Alice"
         age={24}
-        bio="Just a calm Guy"
+        bio="Loves hiking photography"
       />
     </div>
   );
