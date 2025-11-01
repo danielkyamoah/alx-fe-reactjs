@@ -6,6 +6,7 @@ import "./App.css";
 import Header from "./components/Header.jsx";
 import MainContent from "./components/Maincontent.jsx";
 import Footer from "./components/Footer.jsx";
+import UserProfile from "./components/UserProfile.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,7 +17,15 @@ function App() {
       <Header />
       <MainContent />
       <Footer />
-
+        return (
+    <div>
+      <UserProfile
+        name="Daniel Kofi Yamoah"
+        age={24}
+        bio="Just a calm Guy"
+      />
+    </div>
+  );
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
