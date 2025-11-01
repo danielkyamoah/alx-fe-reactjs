@@ -7,3 +7,5 @@
      </div>
    );
  };
+
+ export default UserProfile
