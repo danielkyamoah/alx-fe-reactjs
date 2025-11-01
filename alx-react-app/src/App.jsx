@@ -21,7 +21,7 @@ function App() {
     <div>
       <UserProfile
         name="Alice"
-        age={24}
+        age={25}
         bio="Loves hiking and photography"
       />
     </div>
