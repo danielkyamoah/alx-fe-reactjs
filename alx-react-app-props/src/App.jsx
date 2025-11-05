@@ -1,5 +1,5 @@
 import ProfilePage from "./components/ProfilePage";
-import UserContext from './UserContext';
+import UserContext from './src/UserContext';
 import UserProfile from  "./components/UserProfile"
 import UserInfo from "./components/UserInfo";
 import UserDetails from './components/UserDetails';
