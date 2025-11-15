@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useRecipeStore } from "./recipeStore";
 import DeleteRecipeButton from "./DeleteRecipeButton";
+import { useRecipeStore } from "./recipeStore";
 
 const RecipeList = () => {
   const recipes = useRecipeStore((state) => state.recipes);
@@ -9,16 +10,16 @@ const RecipeList = () => {
   const searchTerm = useRecipeStore((state) => state.searchTerm);
   const setSearchTerm = useRecipeStore((state) => state.setSearchTerm);
   const filterRecipes = useRecipeStore((state) => state.filterRecipes);
-
+  const favorites = useRecipeStore((state) => state.favorites);
+  const addFavorite = useRecipeStore((state) => state.addFavorite);
+  const removeFavorite = useRecipeStore((state) => state.removeFavorite);
 
   const [query, setQuery] = useState(searchTerm || "");
-
 
   useEffect(() => {
     setSearchTerm(query);
   }, [query, setSearchTerm]);
 
-  
   useEffect(() => {
     if (searchTerm && searchTerm.length > 0) {
       filterRecipes();
@@ -83,7 +84,9 @@ const RecipeList = () => {
             >
               <h3>{recipe.title}</h3>
               <p>{recipe.description}</p>
-              <div style={{ display: "flex", gap: "1rem" }}>
+              <div
+                style={{ display: "flex", gap: "1rem", alignItems: "center" }}
+              >
                 <Link
                   to={`/recipe/${recipe.id}`}
                   style={{ color: "#0066cc", textDecoration: "none" }}
@@ -91,6 +94,21 @@ const RecipeList = () => {
                   View Details
                 </Link>
                 <DeleteRecipeButton id={recipe.id} />
+                {favorites && favorites.includes(recipe.id) ? (
+                  <button
+                    onClick={() => removeFavorite(recipe.id)}
+                    style={{ padding: "0.25rem 0.5rem" }}
+                  >
+                    ★ Favorited
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => addFavorite(recipe.id)}
+                    style={{ padding: "0.25rem 0.5rem" }}
+                  >
+                    ☆ Add Favorite
+                  </button>
+                )}
               </div>
             </div>
           ))}
