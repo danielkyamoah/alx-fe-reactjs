@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { fetchGitHubUser } from "../services/githubService";
 
 const UserDetails = () => {
   const { username } = useParams();
@@ -12,20 +13,11 @@ const UserDetails = () => {
     setLoading(true);
     setError(null);
 
-    const apiKey = import.meta.env.VITE_APP_GITHUB_API_KEY;
-    const headers = apiKey ? { Authorization: `token ${apiKey}` } : {};
-
-    fetch(`https://api.github.com/users/${encodeURIComponent(username)}`, {
-      headers,
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error(`GitHub API returned ${res.status}`);
-        return res.json();
-      })
+    fetchGitHubUser(username)
       .then((data) => setUser(data))
       .catch((err) => setError(err.message || "Fetch error"))
       .finally(() => setLoading(false));
-  }, [username]);
+  }, [username];}
 
   if (loading) return <div style={{ padding: 20 }}>Loading...</div>;
   if (error)
