@@ -17,7 +17,7 @@ const UserDetails = () => {
       .then((data) => setUser(data))
       .catch((err) => setError(err.message || "Fetch error"))
       .finally(() => setLoading(false));
-  }, [username];}
+  }, [username]);
 
   if (loading) return <div style={{ padding: 20 }}>Loading...</div>;
   if (error)
