@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fetchGitHubUser } from "../services/githubService";
+import { fetchUserData } from "../services/githubService";
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -17,7 +17,7 @@ const Search = () => {
     setUser(null);
 
     try {
-      const data = await fetchGitHubUser(name);
+      const data = await fetchUserData(name);
       setUser(data);
     } catch (err) {
       setError(err.message || "Unknown error");
