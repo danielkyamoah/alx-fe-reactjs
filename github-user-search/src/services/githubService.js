@@ -94,6 +94,76 @@ export const searchUsers = async (query, perPage = 10) => {
 }
 
 /**
+ * Advanced user search with optional filters and pagination.
+ * Wraps GitHub's search/users endpoint and hydrates results with full user details.
+ * @param {Object} params
+ * @param {string} [params.username]
+ * @param {string} [params.location]
+ * @param {number|string} [params.minRepos]
+ * @param {number} [params.perPage=10]
+ * @param {number} [params.page=1]
+ * @returns {Promise<Object>} Search results with detailed user info
+ */
+export const searchUsersAdvanced = async ({
+    username,
+    location,
+    minRepos,
+    perPage = 10,
+    page = 1,
+} = {}) => {
+    const parts = []
+
+    if (username && username.trim()) {
+        parts.push(`${username.trim()} in:login`)
+    }
+
+    if (location && location.trim()) {
+        parts.push(`location:${location.trim()}`)
+    }
+
+    if (minRepos !== undefined && minRepos !== null && `${minRepos}`.trim() !== '') {
+        const parsed = Number(minRepos)
+        if (!Number.isNaN(parsed) && parsed > 0) {
+            parts.push(`repos:>=${parsed}`)
+        }
+    }
+
+    const query = parts.join(' ').trim()
+
+    if (!query) {
+        throw new Error('At least one search criteria (username, location or minimum repos) is required')
+    }
+
+    const url = `${API_BASE}/search/users?q=${encodeURIComponent(
+        query,
+    )}&per_page=${perPage}&page=${page}`
+
+    const response = await fetch(url, { headers: getHeaders() })
+
+    if (!response.ok) {
+        throw new Error(`Search failed: ${response.status}`)
+    }
+
+    const json = await response.json()
+
+    const itemsWithDetails = await Promise.all(
+        (json.items || []).map(async (item) => {
+            try {
+                const detail = await fetchUserData(item.login)
+                return { ...item, ...detail }
+            } catch {
+                return item
+            }
+        }),
+    )
+
+    return {
+        ...json,
+        items: itemsWithDetails,
+    }
+}
+
+/**
  * Get rate limit information for GitHub API
  * @returns {Promise<Object>} Rate limit object
  */
