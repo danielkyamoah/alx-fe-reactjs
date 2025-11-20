@@ -3,7 +3,7 @@ import { fetchUserData } from "../services/githubService";
 
 const Search = () => {
   const [query, setQuery] = useState("");
-  const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -14,11 +14,11 @@ const Search = () => {
 
     setLoading(true);
     setError(null);
-    setUser(null);
+    setUsers([]);
 
     try {
       const data = await fetchUserData(name);
-      setUser(data);
+      setUsers([data]);
     } catch (err) {
       setError(err.message || "Unknown error");
     } finally {
@@ -44,20 +44,26 @@ const Search = () => {
 
       {!loading && error && <p style={{ color: "red" }}>{error}</p>}
 
-      {!loading && !error && user && (
+      {!loading && !error && users.length > 0 && (
         <div style={{ marginTop: 16 }}>
-          <img
-            src={user.avatar_url}
-            alt={`${user.login} avatar`}
-            style={{ width: 96, borderRadius: 8 }}
-          />
-          <h3>{user.login}</h3>
-          <p>{user.name}</p>
-          <p>{user.bio}</p>
+          {users.map((user) => (
+            <div key={user.id ?? user.login} style={{ marginBottom: 16 }}>
+              <img
+                src={user.avatar_url}
+                alt={`${user.login} avatar`}
+                style={{ width: 96, borderRadius: 8 }}
+              />
+              <h3>{user.login}</h3>
+              <p>{user.name}</p>
+              <p>{user.bio}</p>
+            </div>
+          ))}
         </div>
       )}
 
-      {!loading && !error && !user && <p>Looks like we cant find the user</p>}
+      {!loading && !error && users.length === 0 && query.trim() !== "" && (
+        <p>Looks like we cant find the user</p>
+      )}
     </div>
   );
 };
