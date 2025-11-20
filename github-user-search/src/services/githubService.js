@@ -1,5 +1,6 @@
 // GitHub API service module
 // Provides functions to fetch user data and repositories from GitHub
+import axios from 'axios'
 
 const API_BASE = 'https://api.github.com'
 const API_KEY = import.meta.env.VITE_APP_GITHUB_API_KEY
@@ -17,24 +18,37 @@ const getHeaders = () => {
 }
 
 /**
- * Fetch a GitHub user profile by username
+ * Fetch a GitHub user profile by username using Axios
  * @param {string} username - GitHub username
  * @returns {Promise<Object>} User profile object
  */
-export const fetchGitHubUser = async (username) => {
+export const fetchUserData = async (username) => {
     if (!username) throw new Error('Username is required')
 
-    const response = await fetch(
-        `${API_BASE}/users/${encodeURIComponent(username)}`,
-        { headers: getHeaders() }
-    )
-
-    if (!response.ok) {
-        if (response.status === 404) throw new Error('User not found')
-        throw new Error(`GitHub API error: ${response.status}`)
+    try {
+        const response = await axios.get(
+            `${API_BASE}/users/${encodeURIComponent(username)}`,
+            { headers: getHeaders() }
+        )
+        return response.data
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            throw new Error('User not found')
+        }
+        throw new Error(
+            error.response
+                ? `GitHub API error: ${error.response.status}`
+                : 'Network error while contacting GitHub'
+        )
     }
+}
 
-    return response.json()
+/**
+ * Backwards-compatible wrapper for existing code using fetchGitHubUser
+ * Delegates to fetchUserData.
+ */
+export const fetchGitHubUser = async (username) => {
+    return fetchUserData(username)
 }
 
 /**
