@@ -56,6 +56,14 @@ const Search = () => {
               <h3>{user.login}</h3>
               <p>{user.name}</p>
               <p>{user.bio}</p>
+              {user.location && <p>Location: {user.location}</p>}
+              {user.html_url && (
+                <p>
+                  <a href={user.html_url} target="_blank" rel="noreferrer">
+                    View on GitHub
+                  </a>
+                </p>
+              )}
             </div>
           ))}
         </div>
