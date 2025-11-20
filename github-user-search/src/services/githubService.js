@@ -74,6 +74,7 @@ export const fetchUserRepos = async (username, perPage = 30) => {
 
 /**
  * Search for users by query
+ * Uses GitHub search users endpoint: https://api.github.com/search/users?q
  * @param {string} query - Search query
  * @param {number} perPage - Results per page (default: 10)
  * @returns {Promise<Object>} Search results object with items array
