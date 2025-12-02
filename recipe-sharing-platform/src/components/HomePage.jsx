@@ -23,6 +23,14 @@ const HomePage = () => {
             kitchen. Each recipe is carefully curated to bring great flavors to
             your table.
           </p>
+          <div className="mt-6">
+            <Link
+              to="/add"
+              className="inline-block px-4 py-2 bg-amber-600 text-white rounded-md font-semibold hover:bg-amber-700 transition-colors duration-150"
+            >
+              Add Recipe
+            </Link>
+          </div>
         </header>
 
         {/* Recipe Grid Section */}
