@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import recipesData from "../data.json";
 
 const HomePage = () => {
@@ -65,9 +66,12 @@ const HomePage = () => {
                     </p>
 
                     {/* Action Button */}
-                    <button className="mt-auto px-4 py-2 bg-amber-50 text-amber-700 font-semibold rounded-md hover:bg-amber-100 transition-colors duration-200 border border-amber-200 hover:border-amber-300">
+                    <Link
+                      to={`/recipe/${recipe.id}`}
+                      className="mt-auto inline-block px-4 py-2 bg-amber-50 text-amber-700 font-semibold rounded-md hover:bg-amber-100 transition-colors duration-200 border border-amber-200 hover:border-amber-300 text-center"
+                    >
                       View Recipe
-                    </button>
+                    </Link>
                   </div>
                 </article>
               ))}
