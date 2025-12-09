@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 
 const RegistrationForm = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    if (name === "username") {
+      setUsername(value);
+    } else if (name === "email") {
+      setEmail(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
     if (errors[name]) {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -27,15 +27,15 @@ const RegistrationForm = () => {
     let newErrors = {};
     let isValid = true;
 
-    if (!formData.username.trim()) {
+    if (!username.trim()) {
       newErrors.username = "Username is required.";
       isValid = false;
     }
-    if (!formData.email.trim()) {
+    if (!email.trim()) {
       newErrors.email = "Email is required.";
       isValid = false;
     }
-    if (!formData.password.trim()) {
+    if (!password.trim()) {
       newErrors.password = "Password is required.";
       isValid = false;
     }
@@ -48,13 +48,15 @@ const RegistrationForm = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      console.log("Registration Data Submitted:", formData);
-
-      setFormData({
-        username: "",
-        email: "",
-        password: "",
+      console.log("Registration Data Submitted:", {
+        username,
+        email,
+        password,
       });
+
+      setUsername("");
+      setEmail("");
+      setPassword("");
       alert("Registration Successful!");
     } else {
       console.log("Form submission failed due to validation errors.");
@@ -79,7 +81,7 @@ const RegistrationForm = () => {
             type="text"
             id="username"
             name="username"
-            value={formData.username}
+            value={username}
             onChange={handleChange}
             style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
           />
@@ -96,7 +98,7 @@ const RegistrationForm = () => {
             type="email"
             id="email"
             name="email"
-            value={formData.email}
+            value={email}
             onChange={handleChange}
             style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
           />
@@ -113,7 +115,7 @@ const RegistrationForm = () => {
             type="password"
             id="password"
             name="password"
-            value={formData.password}
+            value={password}
             onChange={handleChange}
             style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
           />
