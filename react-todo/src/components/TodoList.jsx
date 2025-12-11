@@ -22,7 +22,6 @@ const TodoList = () => {
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   }, []);
 
-  // Method to toggle a todo's completion status
   const toggleTodo = useCallback((id) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
@@ -31,7 +30,6 @@ const TodoList = () => {
     );
   }, []);
 
-  // Method to delete a todo
   const deleteTodo = useCallback((id) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   }, []);

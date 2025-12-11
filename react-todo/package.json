@@ -8,8 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "react-scripts start",
-    "eject": "react-scripts eject"
+    "test": "jest"  
   },
   "dependencies": {
     "react": "^19.2.0",
