@@ -7,7 +7,8 @@ import About from './components/About';
 import Profile from './components/Profile';
 import ProfileDetails from './components/ProfileDetails';
 import ProfileSettings from './components/ProfileSettings';
-import Post from './components/Post';
+
+import BlogPost from './components/BlogPost'; 
 import ProtectedRoute from './components/ProtectedRoute';
 import NotFound from './components/NotFound';
 
@@ -23,10 +24,10 @@ function App() {
             
             <Route path="about" element={<About />} />
             
-            {/* Dynamic Routing: /post/123 */}
-            <Route path="post/:id" element={<Post />} />
+          
+            <Route path="blog/:id" element={<BlogPost />} />
             
-            {/* Protected and Nested Routes */}
+        
             <Route 
               path="profile" 
               element={
@@ -35,7 +36,7 @@ function App() {
                 </ProtectedRoute>
               }
             >
-              {/* Nested Routes: /profile/details and /profile/settings */}
+            
               <Route path="details" element={<ProfileDetails />} />
               <Route path="settings" element={<ProfileSettings />} />
             </Route>
