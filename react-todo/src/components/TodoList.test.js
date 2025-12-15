@@ -4,7 +4,7 @@ import TodoList from "../components/TodoList";
 
 describe("TodoList Component", () => {
   test("renders TodoList component with initial todos", () => {
-    render(<TodoList />);
+    render(React.createElement(TodoList));
 
     // Check if the title is rendered
     expect(screen.getByText("Todo List")).toBeInTheDocument();
@@ -16,7 +16,7 @@ describe("TodoList Component", () => {
   });
 
   test("displays todos with correct initial completion status", () => {
-    render(<TodoList />);
+    render(React.createElement(TodoList));
 
     // Check that "Learn React" is not completed (no strikethrough)
     const learnReact = screen.getByText("Learn React");
@@ -35,7 +35,7 @@ describe("TodoList Component", () => {
   });
 
   test("adds a new todo when form is submitted", () => {
-    render(<TodoList />);
+    render(React.createElement(TodoList));
 
     // Get the input and button
     const input = screen.getByPlaceholderText("Add a new todo...");
@@ -55,7 +55,7 @@ describe("TodoList Component", () => {
   });
 
   test("does not add empty todo when form is submitted", () => {
-    render(<TodoList />);
+    render(React.createElement(TodoList));
 
     const input = screen.getByPlaceholderText("Add a new todo...");
     const addButton = screen.getByText("Add Todo");
@@ -69,7 +69,7 @@ describe("TodoList Component", () => {
   });
 
   test("toggles todo completion status when clicked", () => {
-    render(<TodoList />);
+    render(React.createElement(TodoList));
 
     const learnReact = screen.getByText("Learn React");
     const learnReactLi = learnReact.closest("li");
@@ -91,7 +91,7 @@ describe("TodoList Component", () => {
   });
 
   test("deletes a todo when delete button is clicked", () => {
-    render(<TodoList />);
+    render(React.createElement(TodoList));
 
     // Initially should have 3 todos
     expect(screen.getAllByRole("listitem")).toHaveLength(3);
@@ -115,7 +115,7 @@ describe("TodoList Component", () => {
   });
 
   test("trims whitespace from todo text", () => {
-    render(<TodoList />);
+    render(React.createElement(TodoList));
 
     const input = screen.getByPlaceholderText("Add a new todo...");
     const addButton = screen.getByText("Add Todo");
